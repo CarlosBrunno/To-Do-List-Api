@@ -1,0 +1,92 @@
+# Arquivos de compilação
+bin/
+obj/
+
+# Visual Studio
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Visual Studio Code
+.vscode/
+
+# Pacotes NuGet
+*.nupkg
+packages/
+# Se você estiver usando um repositório NuGet, descomente as linhas abaixo para ignorar a pasta NuGet global
+# *packages/*
+# !packages/build/
+
+# Dependências por projeto
+project.lock.json
+project.fragment.lock.json
+
+# Logs, arquivos de banco de dados locais, configurações temporárias
+*.log
+*.ldf
+*.mdf
+*.pidb
+*.swo
+*.swp
+
+# Diretórios específicos da IDEs
+.idea/
+.ionide/
+Rider/
+
+# Arquivos de cache do usuário
+*.rsuser
+*.rsdf
+
+# Configurações de publicação locais
+.publish/
+
+# Arquivos temporários de design de interface
+*.Designer.cs
+
+# Arquivos de backup do Visual Studio Code
+*.bak
+
+# Diretórios de cache de aplicativos locais e temporários
+AppData/
+App_Data/
+temp/
+logs/
+
+# Arquivos temporários do ReSharper
+_ReSharper.Caches/
+
+# Arquivos de cache do Rider
+.idea/workspace.xml
+.idea/tasks.xml
+.idea/assetWizard/
+
+# Certificados de segurança local
+*.pfx
+*.p12
+
+# Arquivos de cache de teste
+TestResults/
+*.trx
+*.coverage
+
+# Arquivos de configuração do Docker
+docker-compose.override.yml
+
+# Arquivos de configuração do Azure Functions
+local.settings.json
+
+# Arquivos gerados pela pasta Properties no .NET
+Properties/launchSettings.json
+
+# Diretórios e arquivos do MSBuild
+!msbuild/*
+
+# Arquivos e configurações de Kubernetes
+secrets.dev.yaml
+secrets.prod.yaml
+
+# Diretórios de migrações do Entity Framework
+Migrations/
