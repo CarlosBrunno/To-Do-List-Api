@@ -22,7 +22,7 @@ namespace To_Do_List.Domain.Contracts
                  .MinimumLength(3).WithMessage("Title can't have less of 3 characters");
 
             RuleFor(taskItem => taskItem.IsChecked)
-                 .NotEmpty().WithMessage("IsChecked can't be empty");
+                 .NotNull().WithMessage("IsChecked can't be null.");
 
             RuleFor(taskItem => taskItem.CreatedAt)
                 .NotEmpty().WithMessage("CreatedAt can't be empty")
