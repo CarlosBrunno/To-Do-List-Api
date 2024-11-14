@@ -19,9 +19,12 @@ namespace To_Do_List.Infrastructure.Repositories
         {
             _context = context;
         }
-        
+
         public async Task<IEnumerable<TaskItem>> GetAllAsync() =>
-            await _context.TaskItems.ToListAsync();
+        await _context.TaskItems
+            .OrderBy(task => task.CreatedAt)
+            .ToListAsync();
+
 
         public async Task<TaskItem> GetByIdAsync(Guid id) =>
             await _context.TaskItems.FindAsync(id);
@@ -43,13 +46,18 @@ namespace To_Do_List.Infrastructure.Repositories
             var properties = typeof(TaskItem).GetProperties();
             foreach (var property in properties)
             {
-                var newValue = property.GetValue(taskItem);
-                var originalValue = property.GetValue(taskItemToUpdate);
-
-                if (newValue != null && !(newValue is string str && string.IsNullOrEmpty(str)))
+                
+                if(property.Name != "CreatedAt")
                 {
-                    property.SetValue(taskItemToUpdate, newValue);
+                    var newValue = property.GetValue(taskItem);
+                    var originalValue = property.GetValue(taskItemToUpdate);
+
+                    if (newValue != null && !(newValue is string str && string.IsNullOrEmpty(str)))
+                    {
+                        property.SetValue(taskItemToUpdate, newValue);
+                    }
                 }
+                
             }
             await _context.SaveChangesAsync();
         }
