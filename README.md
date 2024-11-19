@@ -1,9 +1,3 @@
-# To-Do-List-Api
-
-Here's a project description in English that you can use for your `README.md` file:
-
----
-
 # To-Do List API
 
 This project is an API built using C# and .NET Core with Entity Framework for managing a simple To-Do List application. The primary goal of the API is to provide endpoints for creating, updating, and deleting task items from the to-do list.
