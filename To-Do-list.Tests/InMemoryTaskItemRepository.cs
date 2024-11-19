@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using To_Do_List.Domain.Entities;
 using To_Do_List.Domain.Interfaces;
 
-namespace To_Do_List.Tests.InMemoryRepositories
+namespace To_Do_List.Infrastructure.Repositories
 {
     public class InMemoryTaskItemRepository : ITaskItemRepository
     {
@@ -13,40 +13,54 @@ namespace To_Do_List.Tests.InMemoryRepositories
 
         public Task<IEnumerable<TaskItem>> GetAllAsync()
         {
-            return Task.FromResult(_taskItems.AsEnumerable());
+            var result = _taskItems.OrderBy(task => task.CreatedAt);
+            return Task.FromResult(result.AsEnumerable());
         }
 
         public Task<TaskItem> GetByIdAsync(Guid id)
         {
-            var taskItem = _taskItems.FirstOrDefault(t => t.Id == id);
+            var taskItem = _taskItems.FirstOrDefault(task => task.Id == id);
             return Task.FromResult(taskItem);
         }
 
         public Task AddAsync(TaskItem taskItem)
         {
+            taskItem.Id = Guid.NewGuid();
+            taskItem.CreatedAt = DateTime.UtcNow;
             _taskItems.Add(taskItem);
             return Task.CompletedTask;
         }
 
         public Task UpdateAsync(TaskItem taskItem)
         {
-            var existingTask = _taskItems.FirstOrDefault(t => t.Id == taskItem.Id);
-            if (existingTask == null)
+            var taskItemToUpdate = _taskItems.FirstOrDefault(task => task.Id == taskItem.Id);
+            if (taskItemToUpdate == null)
             {
                 throw new ArgumentException("Task not found for task id: " + taskItem.Id);
             }
 
-            existingTask.Title = taskItem.Title;
-            existingTask.Description = taskItem.Description;
-            existingTask.IsChecked = taskItem.IsChecked;
-            existingTask.UpdatedAt = DateTime.UtcNow;
+            var properties = typeof(TaskItem).GetProperties();
+            foreach (var property in properties)
+            {
+                if (property.Name != "CreatedAt")
+                {
+                    var newValue = property.GetValue(taskItem);
+                    var originalValue = property.GetValue(taskItemToUpdate);
 
+                    if (newValue != null && !(newValue is string str && string.IsNullOrEmpty(str)))
+                    {
+                        property.SetValue(taskItemToUpdate, newValue);
+                    }
+                }
+            }
+
+            taskItemToUpdate.UpdatedAt = DateTime.UtcNow;
             return Task.CompletedTask;
         }
 
         public Task DeleteAsync(Guid id)
         {
-            var taskItem = _taskItems.FirstOrDefault(t => t.Id == id);
+            var taskItem = _taskItems.FirstOrDefault(task => task.Id == id);
             if (taskItem == null)
             {
                 throw new ArgumentException("Task not found for task id: " + id);

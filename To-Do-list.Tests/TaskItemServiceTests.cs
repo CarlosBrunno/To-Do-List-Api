@@ -7,7 +7,8 @@ using Moq;
 using To_Do_List.Application.Services;
 using To_Do_List.Domain.Entities;
 using To_Do_List.Domain.Interfaces;
-using To_Do_List.Tests.InMemoryRepositories;
+using To_Do_List.Infrastructure.Repositories;
+using To_Do_List.Tests.Services;
 using Xunit;
 
 namespace To_Do_List.Tests.Services
@@ -29,7 +30,7 @@ namespace To_Do_List.Tests.Services
             // Arrange
             var newTask = new TaskItem
             {
-                Id = Guid.NewGuid(),
+                Id = new Guid(Guid.NewGuid().ToString()),
                 Title = "New Task",
                 Description = "Description of the new task",
                 IsChecked = false,
@@ -45,75 +46,103 @@ namespace To_Do_List.Tests.Services
         }
 
         [Fact]
-        public async Task GetAllAsync_ShouldReturnTaskItems()
-        {
-            var taskItems = new List<TaskItem>
-            {
-                new TaskItem { Id = Guid.NewGuid(), Title = "Task 1", IsChecked = false },
-                new TaskItem { Id = Guid.NewGuid(), Title = "Task 2", IsChecked = true }
-            };
-
-            _taskItemRepositoryMock
-                .Setup(repo => repo.GetAllAsync())
-                .ReturnsAsync(taskItems);
-
-            var result = await _taskItemService.GetAllAsync();
-
-            result.Should().BeEquivalentTo(taskItems);
-            _taskItemRepositoryMock.Verify(repo => repo.GetAllAsync(), Times.Once);
-        }
-
-        [Fact]
-        public async Task GetByIdAsync_ShouldReturnTaskItem_WhenTaskItemExists()
-        {
-            var taskId = Guid.NewGuid();
-            var taskItem = new TaskItem { Id = taskId, Title = "Task 1", IsChecked = false };
-
-            _taskItemRepositoryMock
-                .Setup(repo => repo.GetByIdAsync(taskId))
-                .ReturnsAsync(taskItem);
-
-            var result = await _taskItemService.GetByIdAsync(taskId);
-
-            result.Should().BeEquivalentTo(taskItem);
-            _taskItemRepositoryMock.Verify(repo => repo.GetByIdAsync(taskId), Times.Once);
-        }
-
-        
-
-        [Fact]
-        public async Task UpdateAsync_ShouldCallRepositoryUpdateMethod()
-        {
-            var updatedTaskItem = new TaskItem { Id = Guid.NewGuid(), Title = "Updated Task" };
-
-            await _taskItemService.UpdateAsync(updatedTaskItem);
-
-            _taskItemRepositoryMock.Verify(repo => repo.UpdateAsync(updatedTaskItem), Times.Once);
-        }
-
-        [Fact]
-        public async Task DeleteAsync_ShouldCallRepositoryDeleteMethod()
-        {
-            var taskId = Guid.NewGuid();
-
-            await _taskItemService.DeleteAsync(taskId);
-
-            _taskItemRepositoryMock.Verify(repo => repo.DeleteAsync(taskId), Times.Once);
-        }
-
-       /* [Fact]
-        public async Task AddAsync_ShouldThrowException_WhenTitleIsNull()
+        public async Task GetByIdTaskItem()
         {
             // Arrange
-            var newTaskItem = new TaskItem { Id = Guid.NewGuid() };
+            var newTask = new TaskItem
+            {
+                Id = new Guid(Guid.NewGuid().ToString()),
+                Title = "New Task",
+                Description = "Description of the new task",
+                IsChecked = false,
+                CreatedAt = DateTime.UtcNow
+            };
 
             // Act
-            await _taskItemService.AddAsync(newTaskItem);
-            var result = await _taskItemService.GetByIdAsync(newTaskItem.Id);
+            await _taskItemService.AddAsync(newTask);
+            var createdTask = await _taskItemService.GetByIdAsync(newTask.Id);
 
             // Assert
-            _taskItemRepositoryMock.Verify(repo => repo.AddAsync(newTaskItem), Times.Once);
-        }*/
+            Assert.Equal(newTask.Id, createdTask.Id);
+        }
+
+        [Fact]
+        public async Task GetAllTaskItem()
+        {
+            // Arrange
+            var taskItemsList = new List<TaskItem>
+                {
+                    new TaskItem {
+                    Id = new Guid(Guid.NewGuid().ToString()),
+                    Title = "New Task",
+                    Description = "Description of the new task",
+                    IsChecked = false,
+                    CreatedAt = DateTime.UtcNow
+                },
+                    new TaskItem {
+                    Id = new Guid(Guid.NewGuid().ToString()),
+                    Title = "New Task2",
+                    Description = "Description of the new task2",
+                    IsChecked = false,
+                    CreatedAt = DateTime.UtcNow
+                }
+            };
+
+            // Act
+            await _taskItemService.AddAsync(taskItemsList[0]);
+            await _taskItemService.AddAsync(taskItemsList[1]);
+
+            var taskItems = await _taskItemService.GetAllAsync();
+
+            // Assert
+            Assert.Equal(taskItems.Count(), 2);
+        }
+
+
+        [Fact]
+        public async Task UpdateTaskItem()
+        {
+            // Arrange
+            var newTask = new TaskItem
+            {
+                Id = new Guid(Guid.NewGuid().ToString()),
+                Title = "New Task",
+                Description = "Description of the new task",
+                IsChecked = false,
+                CreatedAt = DateTime.UtcNow
+            };
+
+            // Act
+            await _taskItemService.AddAsync(newTask);
+            newTask.Title = "Updated Task";
+            await _taskItemService.UpdateAsync(newTask);
+            var updatedTask = await _taskItemService.GetByIdAsync(newTask.Id);
+
+            // Assert
+            Assert.Equal(updatedTask.Title, "Updated Task");
+        }
+
+        [Fact]
+        public async Task DeleteByIdTaskItem()
+        {
+            // Arrange
+            var newTask = new TaskItem
+            {
+                Id = new Guid(Guid.NewGuid().ToString()),
+                Title = "New Task",
+                Description = "Description of the new task",
+                IsChecked = false,
+                CreatedAt = DateTime.UtcNow
+            };
+
+            // Act
+            await _taskItemService.AddAsync(newTask);
+            await _taskItemService.DeleteAsync(newTask.Id);
+            var deletedTask = await _taskItemService.GetByIdAsync(newTask.Id);
+
+            // Assert
+            Assert.Equal(deletedTask, null);
+        }
 
     }
 }
