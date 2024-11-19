@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "To-Do-List.Domain", "To-Do-
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "To-Do-List.Infrastructure", "To-Do-List.Infrastructure\To-Do-List.Infrastructure.csproj", "{D2E00F0E-C920-4026-998C-D4C993A1287F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "To-Do-list.Tests", "To-Do-list.Tests\To-Do-list.Tests.csproj", "{D5338921-F45D-4BD2-A45B-D4AC1A70AF42}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "To-Do-List.Tests", "To-Do-list.Tests\To-Do-List.Tests.csproj", "{D5338921-F45D-4BD2-A45B-D4AC1A70AF42}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
