@@ -5,11 +5,13 @@ VisualStudioVersion = 17.10.35122.118
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "To-Do-List.Api", "To-Do-List.Api\To-Do-List.Api.csproj", "{E2D33147-901C-471B-84FE-4D8442032792}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "To-Do-List.Application", "To-Do-List.Application\To-Do-List.Application.csproj", "{DB5A8B78-7B41-467E-8F79-E07971375649}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "To-Do-List.Application", "To-Do-List.Application\To-Do-List.Application.csproj", "{DB5A8B78-7B41-467E-8F79-E07971375649}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "To-Do-List.Domain", "To-Do-List.Domain\To-Do-List.Domain.csproj", "{D8206C0D-2CE5-401D-86A3-13677100D2A6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "To-Do-List.Domain", "To-Do-List.Domain\To-Do-List.Domain.csproj", "{D8206C0D-2CE5-401D-86A3-13677100D2A6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "To-Do-List.Infrastructure", "To-Do-List.Infrastructure\To-Do-List.Infrastructure.csproj", "{D2E00F0E-C920-4026-998C-D4C993A1287F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "To-Do-List.Infrastructure", "To-Do-List.Infrastructure\To-Do-List.Infrastructure.csproj", "{D2E00F0E-C920-4026-998C-D4C993A1287F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "To-Do-list.Tests", "To-Do-list.Tests\To-Do-list.Tests.csproj", "{D5338921-F45D-4BD2-A45B-D4AC1A70AF42}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{D2E00F0E-C920-4026-998C-D4C993A1287F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D2E00F0E-C920-4026-998C-D4C993A1287F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D2E00F0E-C920-4026-998C-D4C993A1287F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D5338921-F45D-4BD2-A45B-D4AC1A70AF42}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D5338921-F45D-4BD2-A45B-D4AC1A70AF42}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D5338921-F45D-4BD2-A45B-D4AC1A70AF42}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D5338921-F45D-4BD2-A45B-D4AC1A70AF42}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
