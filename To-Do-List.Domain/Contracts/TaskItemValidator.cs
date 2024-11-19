@@ -31,8 +31,9 @@ namespace To_Do_List.Domain.Contracts
             RuleFor(taskItem => taskItem.UpdatedAt)
                 .GreaterThanOrEqualTo(taskItem => taskItem.CreatedAt).When(taskItem => taskItem.UpdatedAt.HasValue)
                 .WithMessage("The UpdatedAt must be greater than or equal to the CreatedAt")
+
                 .LessThanOrEqualTo(DateTime.UtcNow).When(taskItem => taskItem.UpdatedAt.HasValue)
-                .WithMessage("CreatedAt can't be in the past");
+                .WithMessage("UpdatedAt can't be in the Future");
 
         }
     }
